@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Predict AQI</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="bg">
+
+  <header class="nav">
+    <div class="brand">
+      <div class="logo">🌫️</div>
+      <div>
+        <div class="brand-title">AQI Predictor</div>
+        <div class="brand-sub">Enter sensor readings</div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn small ghost" href="/">Home</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head glass">
+      <div>
+        <h2>AQI Prediction</h2>
+        <p class="muted">
+          These fields are generated from your trained model automatically.
+          If you dont know values, click <b>Use Sample Values</b>.
+        </p>
+      </div>
+
+      <div class="head-actions">
+        <button class="btn small" type="button" onclick="fillSample()">Use Sample Values</button>
+        <button class="btn small ghost" type="button" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+
+    <form class="panel glass" method="POST" action="/predict">
+      <div class="form-grid">
+        {% for f in features %}
+          <div class="field">
+            <div class="label-row">
+              <label>{{ meta.get(f, (f, ""))[0] }}</label>
+              <span class="unit">{{ meta.get(f, (f, ""))[1] }}</span>
+            </div>
+            <input
+              name="{{ f }}"
+              type="number"
+              step="any"
+              placeholder="Enter {{ f }}"
+              required
+            />
+            <div class="hint">{{ f }}</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <button class="btn full" type="submit">Predict AQI</button>
+
+      {% if prediction is defined %}
+        <div class="result ok">
+          <div class="result-k">Predicted AQI</div>
+          <div class="result-v">{{ prediction }}</div>
+          <div class="muted smalltext">
+            Tip: These inputs represent sensor readings (pollution + weather). Real systems stream them automatically.
+          </div>
+        </div>
+      {% endif %}
+
+      {% if error is defined %}
+        <div class="result err">
+          <div class="result-k">Error</div>
+          <div class="muted smalltext">{{ error }}</div>
+        </div>
+      {% endif %}
+    </form>
+  </main>
+
+  <script>
+    const SAMPLE = {{ sample | tojson }};
+
+    function fillSample(){
+      document.querySelectorAll("input").forEach(inp => {
+        const key = inp.getAttribute("name");
+        if (SAMPLE[key] !== undefined) inp.value = SAMPLE[key];
+        else inp.value = 10; // default if unknown feature
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function clearAll(){
+      document.querySelectorAll("input").forEach(i => i.value = "");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AQI Predictor</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="bg">
+
+  <header class="nav">
+    <div class="brand">
+      <div class="logo">🌫️</div>
+      <div>
+        <div class="brand-title">AQI Predictor</div>
+        <div class="brand-sub">Flask + ML (Pickle Model)</div>
+      </div>
+    </div>
+
+    <a class="btn small" href="/predictpage">Try Demo</a>
+  </header>
+
+  <main class="hero">
+    <div class="hero-left">
+      <h1>Predict Air Quality Index from sensor readings</h1>
+      <p class="muted">
+        This mini project demonstrates the full ML deployment pipeline:
+        <b>trained model → saved pickle → Flask backend → web UI → deployment</b>.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn" href="/predictpage">Start Prediction</a>
+        <a class="btn ghost" href="#goal">Project Goal</a>
+      </div>
+
+      <div class="chips">
+        <span class="chip">Linear Regression</span>
+        <span class="chip">Joblib Pickle</span>
+        <span class="chip">HTML + CSS</span>
+        <span class="chip">Render-ready</span>
+      </div>
+    </div>
+
+    <div class="hero-right glass">
+      <h3 id="goal">What is the goal?</h3>
+      <p class="muted">
+        In real life, air-quality stations measure pollutants (PM2.5, PM10, NO2...) and weather
+        (temperature, humidity...). Our model takes those readings and predicts <b>AQI</b>.
+        In this demo, we manually enter values to simulate sensor data.
+      </p>
+
+      <div class="mini-grid">
+        <div class="mini">
+          <div class="mini-title">Inputs</div>
+          <div class="mini-text">Pollutants + weather values</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Model</div>
+          <div class="mini-text">Loaded from aqi_model.pkl</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Output</div>
+          <div class="mini-text">Predicted AQI value</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Mini Project • St. Mary’s College • Flask + Scikit-learn
+  </footer>
+</body>
+</html>
